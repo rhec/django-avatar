@@ -13,6 +13,7 @@ AVATAR_STORAGE_DIR = getattr(settings, 'AVATAR_STORAGE_DIR', 'avatars')
 AVATAR_GRAVATAR_BACKUP = getattr(settings, 'AVATAR_GRAVATAR_BACKUP', True)
 AVATAR_DEFAULT_URL = getattr(settings, 'AVATAR_DEFAULT_URL', 
     settings.MEDIA_URL + os.path.join(os.path.dirname(__file__), 'default.jpg'))
+AVATAR_GRAVATAR_BACKUP_DEFAULT = getattr(settings, 'AVATAR_GRAVATAR_BACKUP_DEFAULT', AVATAR_DEFAULT_URL)
 
 from django.db.models import signals
 from django.contrib.auth.models import User

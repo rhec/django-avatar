@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 from django.utils.hashcompat import md5_constructor
 
-from avatar import AVATAR_DEFAULT_URL, AVATAR_GRAVATAR_BACKUP
+from avatar import AVATAR_DEFAULT_URL, AVATAR_GRAVATAR_BACKUP, AVATAR_GRAVATAR_BACKUP_DEFAULT
 
 register = template.Library()
 
@@ -29,9 +29,12 @@ def avatar_url(user, size=80):
         return avatar.avatar_url(size)
     else:
         if AVATAR_GRAVATAR_BACKUP:
-            return "http://www.gravatar.com/avatar/%s/?%s" % (
+            gravatar_options = {'s': str(size)}
+            if AVATAR_GRAVATAR_BACKUP_DEFAULT:
+                gravatar_options['d'] = AVATAR_GRAVATAR_BACKUP_DEFAULT
+            return "http://www.gravatar.com/avatar/%s?%s" % (
                 md5_constructor(user.email).hexdigest(),
-                urllib.urlencode({'s': str(size)}),)
+                urllib.urlencode(gravatar_options),)
         else:
             return AVATAR_DEFAULT_URL
 register.simple_tag(avatar_url)
